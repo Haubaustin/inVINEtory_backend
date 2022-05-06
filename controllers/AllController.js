@@ -5,7 +5,7 @@ const { Op, sequelize, } = require("sequelize");
 
 const CreateStorage = async (req, res) => {
     try {
-        const Storage = await Storage.create({...req.body})
+        const storage = await Storage.create({...req.body})
         res.send({ msg: 'Storage succesfully created' })
     } catch (error) {
         throw error
@@ -27,7 +27,7 @@ const DeleteStorage = async (req, res) => {
     try {
         const del = req.params.storage_id
         const storage = await Storage.destroy({ where: { id: del }})
-        res.send({message: `${storage.name} has been deleted`})
+        res.send({message: `Storage area has been deleted`})
     } catch (error) {
         throw error
     }
@@ -46,8 +46,12 @@ const FindStorage = async (req, res) => {
 
 const CreateBottle = async (req, res) => {
     try {
-        const bottle = await Bottle.create({...req.body})
-        res.send({ msg: 'Bottle succesfully created' })
+        const bottle = await Bottle.create({
+            ...req.body,
+            user_id: req.params.user_id,
+            storage_id: req.params.storage_id
+        })
+        res.send(bottle)
     } catch (error) {
         throw error
     }
@@ -66,9 +70,8 @@ const EditBottle = async (req, res) => {
 
 const DeleteBottle = async (req, res) => {
     try {
-        const del = req.params.bottle_id
-        const bottle = await Bottle.destroy({ where: { id: del }})
-        res.send({message: `${bottle.name} has been deleted`})
+        const bottle = await Bottle.destroy({ where: { id: req.params.bottle_id }})
+        res.send({message: `Bottle has been deleted`})
     } catch (error) {
         throw error
     }

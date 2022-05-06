@@ -15,6 +15,7 @@ const wine = [...Array(10)].map(() => ({
   color: falso.rand(["Red", "White", "Rose"]),
   notes: falso.randParagraph(),
   user_id: falso.rand([1,2,3]),
+  storage_id: falso.rand([1,2,3,4,5]),
   createdAt: new Date(),
   updatedAt: new Date()
 }))
