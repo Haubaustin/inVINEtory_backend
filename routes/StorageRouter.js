@@ -1,2 +1,2 @@
 const router = require('express').Router()
-const controller = require('../controllers/StorageController')
+const controller = require('../controllers/AllController')
