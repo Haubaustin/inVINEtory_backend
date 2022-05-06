@@ -10,12 +10,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Storage.belongsTo(models.User, {
+        foreignKey: "user_id",
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
+      Storage.hasMany(models.bottles, {
+        foreignKey: "storage_id",
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
     }
   }
   Storage.init({
+    name: DataTypes.STRING,
     columns: DataTypes.INTEGER,
-    rows: DataTypes.INTEGER
+    rows: DataTypes.INTEGER,
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Storage',

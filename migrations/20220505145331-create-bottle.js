@@ -11,6 +11,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      winery: { 
+        type: Sequelize.STRING,
+      },
+      region: {
+        type: Sequelize.STRING,
+      },
       vintage: {
         type: Sequelize.STRING
       },
@@ -31,6 +37,24 @@ module.exports = {
       },
       notes: {
         type: Sequelize.TEXT
+      },
+      user_id: {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
+      storage_id: {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'storages',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
