@@ -1,0 +1,1 @@
+const { Bottle, Storage, User } = require('../models')
