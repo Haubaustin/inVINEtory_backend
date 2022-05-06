@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
-      Storage.hasMany(models.bottles, {
+      Storage.hasMany(models.Bottle, {
         foreignKey: "storage_id",
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
