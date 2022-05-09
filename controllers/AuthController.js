@@ -7,10 +7,10 @@ const Login = async (req, res) => {
       where: { username: req.body.username },
       raw: true
     })
-    if (
-      user &&
+    if (user && 
       (await middleware.comparePassword(user.password, req.body.password))
-    ) {
+    )
+     {
       let payload = {
         id: user.id,
         username: user.username
@@ -18,7 +18,7 @@ const Login = async (req, res) => {
       let token = middleware.createToken(payload)
       return res.send({ user: payload, token })
     }
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    res.status(409).send({ message: 'Incorrect username or password' })
   } catch (error) {
     throw error
   }
@@ -26,16 +26,14 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    const { email, register_password, username, profilepic } = req.body
     const user = await User.findOne({ where: {username: req.body.username} })
-    
     if (user) {
-      return res.send({ message: "Username already in use"})
+      return res.send({ message: "Username already in use" })
     }
-      
-    let password = await middleware.hashPassword(register_password)
-    const newuser = await User.create({ email, password, username, profilepic })
-    res.send(newuser)
+    let { email, username } = req.body
+    let password = await middleware.hashPassword(req.body.password)
+    const newuser = await User.create({ email, password, username})
+      res.send(newuser)
   } catch (error) {
     throw error
   }
@@ -43,6 +41,7 @@ const Register = async (req, res) => {
 
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
+  console.log(payload)
   res.send(payload)
 }
 
