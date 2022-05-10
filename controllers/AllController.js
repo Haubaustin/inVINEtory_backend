@@ -42,6 +42,15 @@ const FindStorage = async (req, res) => {
     }
 }
 
+const FindOneStorage = async (req, res) => {
+    try {
+        const storage = await Storage.findOne({ include: [{model: Bottle}], where: {id: req.params.storage_id}})
+        res.send(storage)
+    } catch (error) {
+        throw error
+    }
+}
+
 //#################### Bottle Controllers
 
 const CreateBottle = async (req, res) => {
@@ -94,5 +103,6 @@ const FindBottle = async (req, res) => {
         CreateBottle,
         EditBottle,
         DeleteBottle,
-        FindBottle
+        FindBottle,
+        FindOneStorage
     }
