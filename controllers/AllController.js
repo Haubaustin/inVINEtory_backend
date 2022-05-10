@@ -6,7 +6,7 @@ const { Op, sequelize, } = require("sequelize");
 const CreateStorage = async (req, res) => {
     try {
         const storage = await Storage.create({...req.body})
-        res.send({ msg: 'Storage succesfully created' })
+        return res.send({ message: 'Storage succesfully created' })
     } catch (error) {
         throw error
     }
