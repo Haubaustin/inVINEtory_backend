@@ -35,7 +35,23 @@ const DeleteStorage = async (req, res) => {
 
 const FindStorage = async (req, res) => {
     try {
-        const storage = await Storage.findAll({ include: [{model: Bottle}], where: {user_id: req.params.user_id}})
+        const storage = await Storage.findAll({
+            where: {user_id: req.params.user_id},
+            include: [
+                { 
+                    model: Bottle,
+                    },
+                    // {order:
+                    // [['column', 'desc']]}
+                ],
+            // order: [
+            // [{model: Bottle}, 'column', 'ASC'] 
+            // ]
+            // order: [
+            //     [Bottle, 'column', 'DESC']
+            // ]
+            })
+        console.log(storage)
         res.send(storage)
     } catch (error) {
         throw error
@@ -44,7 +60,9 @@ const FindStorage = async (req, res) => {
 
 const FindOneStorage = async (req, res) => {
     try {
-        const storage = await Storage.findOne({ include: [{model: Bottle}], where: {id: req.params.storage_id}})
+        const storage = await Storage.findOne({ where: {id: req.params.storage_id}, 
+            include: [{model: Bottle}], 
+            order: [[Bottle, 'row', 'asc'],[Bottle, 'column', 'asc']]})
         res.send(storage)
     } catch (error) {
         throw error
