@@ -78,7 +78,7 @@ const CreateBottle = async (req, res) => {
             user_id: req.params.user_id,
             storage_id: req.params.storage_id
         })
-        res.send(bottle)
+        res.send({message: `${req.body.name} successfully placed in row ${req.body.row} column ${req.body.column}`})
     } catch (error) {
         throw error
     }
@@ -113,6 +113,28 @@ const FindBottle = async (req, res) => {
     }
 }
 
+const SearchAllBottleByStorage = async (req, res) => {
+    try {
+        const query = req.params.search
+        const bottles = await Bottle.findAll({
+            where: {storage_id: req.params.storage_id,
+            [Op.and]: [
+                {where: {
+                    [Op.or]: [{
+                        name: { [Op.like]: '%' + query + '%'},
+                        region: { [Op.like]: '%' + query + '%'}
+                }]
+                }}
+                    ]   
+                }
+            }
+        )
+    }
+    catch (error) {
+        throw error
+    }
+}
+
     module.exports = {
         CreateStorage,
         EditStorage,
@@ -122,5 +144,6 @@ const FindBottle = async (req, res) => {
         EditBottle,
         DeleteBottle,
         FindBottle,
-        FindOneStorage
+        FindOneStorage,
+        SearchAllBottleByStorage
     }
