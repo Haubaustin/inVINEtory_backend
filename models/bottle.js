@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE'
       })
       Bottle.belongsTo(models.Storage, {
-        foreignKey: "user_id",
+        foreignKey: "storage_id",
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
