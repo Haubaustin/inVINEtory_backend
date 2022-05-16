@@ -61,6 +61,23 @@ const FindOneStorage = async (req, res) => {
     }
 }
 
+const FindAllButCurrentStorage = async (req, res) => {
+    try {
+        const storage = await Storage.findAll({ 
+            where: {
+                [Op.and] : [
+                    {user_id: req.params.user_id},
+                    {id: { [Op.not]: req.params.storage_id }}
+                ]
+            }, 
+            include: [{model: Bottle}], 
+        })
+        res.send(storage)
+    } catch (error) {
+        throw error
+    }
+}
+
 //#################### Bottle Controllers
 
 const CreateBottle = async (req, res) => {
@@ -81,7 +98,7 @@ const EditBottle = async (req, res) => {
         const upd = req.params.bottle_id
         const bottle = await Bottle.findByPk(upd)
         bottle.update({...req.body})
-        res.send(bottle)
+        res.send({message: `${bottle.name} has been updated successfully`})
     } catch (error) {
         throw error
     }
@@ -165,5 +182,6 @@ const SearchAllBottleByUser = async (req, res) => {
         FindBottle,
         FindOneStorage,
         SearchAllBottleByStorage,
-        SearchAllBottleByUser
+        SearchAllBottleByUser,
+        FindAllButCurrentStorage
     }
