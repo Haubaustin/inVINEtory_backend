@@ -87,7 +87,7 @@ const CreateBottle = async (req, res) => {
             user_id: req.params.user_id,
             storage_id: req.params.storage_id
         })
-        res.send({message: `${req.body.name} successfully placed in row ${parseInt(req.body.row+1)} column ${pareInt(req.body.column+1)}`})
+        res.send({message: `${req.body.name} successfully placed in row ${parseInt(req.body.row+1)} column ${parseInt(req.body.column+1)}`})
     } catch (error) {
         throw error
     }
